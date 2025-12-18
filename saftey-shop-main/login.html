@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ورود</title>
+
+  </head>
+  <body class="h-screen overflow-hidden">
+
+    <div class="h-full flex"> <!-- اضافه شد: flex -->
+      <!-- ✅ فرم ورود، نصف سمت راست -->
+      <div class="w-full md:w-1/2 h-full flex items-center justify-center bg-white px-6 relative z-10">
+   
+        <!-- 🔵 Blob بالا راست -->
+        <div class="absolute top-[-40px] right-[-40px] w-40 h-40 z-[-1] opacity-50">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#f5b041" d="M39.5,25.5C25.5,47,-29.2,47.7,-42.6,26.6C-55.9,5.4,-28,-37.6,-0.6,-37.9C26.7,-38.3,53.5,4,39.5,25.5Z" transform="translate(100 100)" />
+          </svg>
+        </div>
+
+        <!-- 🔵 Blob پایین چپ -->
+        <div class="absolute bottom-[-40px] left-[-40px] w-40 h-40 z-[-1] opacity-50">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#f5b041" d="M39.5,25.5C25.5,47,-29.2,47.7,-42.6,26.6C-55.9,5.4,-28,-37.6,-0.6,-37.9C26.7,-38.3,53.5,4,39.5,25.5Z" transform="translate(100 100)" />
+          </svg>
+        </div>
+
+
+        <div class="w-full max-w-sm">
+          <h2 class="text-2xl font-bold mb-6 text-right">ورود به حساب کاربری</h2>
+          <form class="space-y-5" id="loginForm">
+            <div class="relative">
+              <input type="text" id="username" name="username" required class="peer w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-600 text-right" />
+              <label for="username" class="absolute text-gray-500 right-4 top-2 transition-all peer-focus:-top-4 peer-valid:-top-4 peer-focus:text-sm peer-valid:text-sm bg-blue-100 rounded-full px-2">نام کاربری</label>
+            </div>
+
+            <div class="relative">
+              <input type="email" id="email" name="email" required class="peer w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-600 text-right" />
+              <label for="email" class="absolute text-gray-500 right-4 top-2 transition-all peer-focus:-top-4 peer-valid:-top-4 peer-focus:text-sm peer-valid:text-sm bg-blue-100 rounded-full px-2">ایمیل</label>
+            </div>
+
+            <div class="relative">
+              <input type="password" id="password" name="password" required class="peer w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-600 text-right" />
+              <label for="password" class="absolute text-gray-500 right-4 top-2 transition-all peer-focus:-top-4 peer-valid:-top-4 peer-focus:text-sm peer-valid:text-sm bg-blue-100 rounded-full px-2">رمز عبور</label>
+            </div>
+
+       
+<button type="submit" class="w-full border-blue-900  text-orange-950 font-bold py-2 px-4 rounded bg-blue-400 hover:bg-blue-700 hover:text-white hover:border-none transition-all duration-300">
+  ورود
+</button>
+
+
+
+            <p class="text-right text-sm">
+              حساب کاربری ندارید؟ <a href="register.html" class="text-blue-600 hover:underline text-xl">ثبت‌نام </a>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- ✅ تصویر سمت چپ، نصف صفحه -->
+      <div class="w-1/2 h-full hidden md:block">
+        <img src="/images/safety-shutterstock_1065669479.jpg" alt="Login" class="w-full h-full object-cover" />
+      </div>
+    </div>
+
+    <script src="./src/auth.js" type="module" defer></script>
+
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>سیفتی مارکت | فروشگاه تجهیزات ایمنی</title>
+ 
+    <style>
+      body, html {
+        font-family: 'Vazir', sans-serif;
+        overflow-x: hidden;
+      }
+      html {
+        overflow-y: scroll;
+      }
+
+      .rtl {
+        direction: rtl;
+      }
+
+      .swiper {
+        width: 100%;
+        padding-bottom: 2.5rem;
+      }
+
+      #toast {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: #f97316;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+
+  <body class="rtl overflow-x-hidden font-vazir bg-gray-50">
+    <!-- دکمه واتساپ ثابت -->
+    <a
+      href="https://wa.me/989123456789"
+      target="_blank"
+      class="fixed bottom-5 right-5 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition duration-300 ease-in-out z-[9999]"
+      title="ارتباط از طریق واتس‌اپ"
+    >
+      <i class="fa-brands fa-whatsapp text-white text-3xl"></i>
+    </a>
+
+    <!-- Hero Banner -->
+    <section class="w-full h-screen overflow-hidden flex flex-col md:flex-row bg-gray-50 pt-[100px]">
+      <div class="flex flex-col justify-center items-start p-10 md:w-1/2 text-right">
+        <button class="rounded-full bg-white text-orange-700 hover:bg-orange-500 hover:text-white px-6 py-2 mb-3">
+          <i class="fa-solid fa-helmet-safety"></i> ایمن باش
+        </button>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-relaxed">
+          ایمنی را با ما تجربه کنید
+        </h1>
+        <p class="text-gray-600 text-lg mb-8">
+          بزرگترین فروشگاه تجهیزات ایمنی و حفاظت فردی با بهترین قیمت‌ها
+        </p>
+        <a
+          href="#latestProducts"
+          class="bg-orange-500 hover:bg-white border border-orange-600 text-white hover:text-orange-900 px-6 py-3 rounded-lg text-lg shadow"
+        >
+          مشاهده محصولات
+        </a>
+      </div>
+
+      <div class="relative flex justify-center items-end md:items-center container mx-auto px-4">
+        <img
+          src="/images/firefighter-suits-hanging-from-wall-station.png"
+          alt="لباس آتش‌نشانی"
+          class="w-[500px] xl:w-[650px] relative z-10 drop-shadow"
+        />
+        <img
+          src="/images/banner/blob.svg"
+          alt="پس‌زمینه"
+          class="absolute top-0 left-[-80px] w-[900px] md:w-[1500px] max-w-full z-0"
+        />
+      </div>
+    </section>
+
+    <!-- ویژگی‌ها -->
+    <section id="featuresContainer" class="max-w-6xl mx-auto p-6 grid grid-cols-2 sm:grid-cols-4 gap-4" data-aos="fade-up"></section>
+
+    <!-- محصولات بروز -->
+    <section class="max-w-7xl mx-auto py-10 px-4">
+      <div class="text-center mb-8 relative">
+        <span class="text-3xl font-bold px-8 py-4 text-black bg-white border border-gray-300 inline-block">محصولات بروز</span>
+      </div>
+      <div id="latestProducts" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8"></div>
+    </section>
+
+    <!-- محصولات پرفروش -->
+    <section class="py-12 px-4 max-w-7xl mx-auto">
+      <div class="text-center mb-8 relative">
+        <span class="text-3xl font-bold px-8 py-4 text-black bg-white border border-gray-300 inline-block">محصولات پرفروش</span>
+      </div>
+
+      <div class="swiper swiper1 mb-8">
+        <div class="swiper-wrapper" id="first-row"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+
+      <div class="swiper swiper2">
+        <div class="swiper-wrapper" id="second-row"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <!-- برندهای محبوب -->
+    <section class="py-10 px-4 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">برندهای محبوب</h2>
+        <div class="swiper brandSwiper px-8">
+          <div class="swiper-wrapper" id="brands-wrapper"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- نظرات کاربران -->
+    <section class="py-12 px-4 bg-white" id="reviews">
+      <div class="text-center mb-8 relative">
+        <span class="text-3xl font-bold px-8 py-4 text-black bg-white border border-gray-300 inline-block">نظرات کاربران</span>
+      </div>
+
+      <div class="swiper review-swiper max-w-4xl mx-auto">
+        <div class="swiper-wrapper" id="reviews-wrapper"></div>
+        <div class="swiper-pagination mt-6"></div>
+      </div>
+    </section>
+
+    <!-- پیام Toast -->
+    <div id="toast">محصول با موفقیت به سبد خرید اضافه شد ✅</div>
+
+    <!-- فایل‌های اسکریپت -->
+    <script type="module" src="./src/main.js" defer></script>
+  </body>
+</html>

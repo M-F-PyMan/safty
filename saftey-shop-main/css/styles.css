@@ -1,0 +1,140 @@
+/* ==========================
+   Import های کتابخانه‌ها
+   ========================== */
+@import "primeicons/primeicons.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "swiper/css";
+@import "swiper/css/navigation";
+
+/* ==========================
+   Tailwind directives
+   ========================== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================
+   فونت سفارشی
+   ========================== */
+@font-face {
+  font-family: 'Vazir';
+  src: url('/fonts/Vazir.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Vazir', sans-serif;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+/* ==========================
+   Animation و Utilities سفارشی
+   ========================== */
+@layer utilities {
+  @keyframes customFadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-fade-in {
+    animation: slideFadeIn 0.8s ease-in-out both;
+  }
+
+  .animate-slide-fade-in-bg {
+    animation: slideFadeIn 1s ease-out both;
+  }
+
+  .animate-fade-up {
+    animation: customFadeUp 1s ease-out both;
+  }
+}
+
+/* ==========================
+   Keyframes عمومی
+   ========================== */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+/* ظاهرسازی ملایم برای چارت‌ها */
+section.charts .card {
+  background: linear-gradient(180deg, #fffaf7, #ffffff);
+  border: 1px solid rgba(249,115,22,0.08);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(249,115,22,0.08);
+  transition: transform 0.2s ease;
+}
+section.charts .card:hover {
+  transform: translateY(-4px);
+}
+canvas {
+  border-radius: 12px;
+}
+/* کارت‌ها همگی یکسان شوند */
+.stats-card {
+  @apply bg-white p-4 rounded-2xl shadow transition duration-300 text-center border-t-4;
+  border-top-color: #f97316; /* نارنجی */
+}
+
+.stats-card:hover {
+  @apply bg-gradient-to-r from-orange-500 to-orange-300 text-white shadow-lg;
+}
+
+
+/* چارت‌ها بزرگ‌تر */
+.charts canvas {
+  width: 100% !important;
+  max-height: 350px; /* ارتفاع بیشتر */
+  border-radius: 16px;
+}
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem; /* پدینگ مناسب */
+  border-radius: 0.5rem;    /* گوشه‌های گرد */
+  font-size: 0.875rem;      /* کمی کوچک‌تر */
+  font-weight: 500;
+  text-align: center;
+  min-width: 70px;
+}
+
+.status-pending {
+  background-color: #FFEDD5; /* نارنجی ملایم */
+  color: #C2410C;           /* نارنجی تیره متن */
+}
+
+.status-success {
+  background-color: #DCFCE7; /* سبز ملایم */
+  color: #15803D;           /* سبز تیره متن */
+}
+
+.status-canceled {
+  background-color: #FEE2E2; /* قرمز ملایم */
+  color: #B91C1C;           /* قرمز تیره متن */
+}

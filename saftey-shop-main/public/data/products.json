@@ -1,0 +1,257 @@
+[
+  {
+    "id":1,
+    "image": "/images/hamlet1.png",
+    "title": "کلاه ایمنی مهندسی",
+    "price": "۱۵۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+    "category": " تجهیزات حفاظت فردی ",
+        "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  },
+    
+
+
+
+{
+  "id": 2,
+  "image": "/images/full-face-mask-3.avif",
+  "title": "دستکش نسوز صنعتی",
+  "price": "۱۲۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+  "category": " تجهیزات حفاظت فردی ",
+      "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+
+},
+
+  {
+     "id":3,
+    "image": "/images/flashlight.png",
+    "title": "چراغ قوه ",
+    "price": "۱۸۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+      "category": "تجهیزات آتش نشانی ",
+          "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+  },
+  {
+     "id":4,
+    "image": "/images/saftey-mask.avif",
+    "title": "ماسک فیلتردار",
+    "price": "۹۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+          "category": "تجهیزات آتش نشانی ",
+              "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+  },
+  {
+     "id":5,
+    "image": "/images/glove2.png",
+    "title": "دستکش ایمنی ",
+    "price": "۱۵۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+          "category": "تجهیزات آتش نشانی ",
+              "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+  },
+  {
+     "id":6,
+    "image": "/images/tools.jpg",
+    "title": "ابزار ",
+    "price": "۱۲۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+  "category": " تجهیزات حفاظت فردی ",
+      "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+    
+  },
+  {
+     "id":7,
+    "image": "/images/traffic-control.jpg",
+    "title": "مانع ترافیکی ",
+    "price": "۱۸۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+      "category": " تجهیزات  ترافیکی ",
+          "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+  },
+  {
+     "id":8,
+    "image": "/images/hamlet2.png",
+    "title": "کلاه ایمنی ",
+    "price": "۹۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+      "category": " تجهیزات حفاظت فردی ",
+          "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+
+  },
+  {
+     "id":9,
+    "image": "/images/firefighterimg.png",
+    "title": "لباسکار",
+    "price": "۱۵۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+          "category": " تجهیزات کار در ارتفاع ",
+              "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+  },
+  {
+     "id":10,
+    "image": "/images/boot2.png",
+    "title": " کفش ایمنی ",
+    "price": "۱۲۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+          "category": " تجهیزات حفاظت فردی ",
+              "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+
+  },
+  {
+     "id":11,
+    "image": "/images/medical-e-plore.avif",
+    "title": " ماسک ایمنی ",
+    "price": "۱۵۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+          "category": " تجهیزات تنفسی ",
+              "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+  },
+  {
+     "id":12,
+    "image": "/images/earmuff/3M-1271.jpg",
+    "title": "گوشی صداگیر",
+    "price": "۱۲۰۰۰۰",
+        "discountPrice": "۱۹۰۰۰۰۰",
+
+          "category": " تجهیزات حفاظت فردی ",
+              "subcategory": "ماسک ایمنی",
+    "mainImage": "/images/mask/6200-1.avif",
+    "gallery": [
+      "/images/mask/6200-1.avif",
+      "/images/mask/6200-3m-2.avif",
+      "/images/mask/6200-3m-3.avif",
+      "/images/mask/6200-3m-4.avif"
+    ],
+    "sizes": ["کوچک", "متوسط", "بزرگ"],
+    "description": "صنایع پیشنهادی شامل ساخت و ساز، تولید عمومی، زیرساخت‌های سنگین..."
+  
+
+  }
+]

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>داشبورد مدیریتی</title>
+
+  <!-- TailwindCSS -->
+
+  <!-- آیکون‌ها و کتابخانه‌ها -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css" />
+
+  <script src="https://unpkg.com/jquery@3.6.4/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/persian-date/dist/persian-date.min.js"></script>
+  <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    
+    .sidebar {
+      transition: all 0.3s ease-in-out;
+    }
+    .sidebar.collapsed {
+      width: 70px;
+    }
+    .sidebar.collapsed .menu-text {
+      display: none;
+    }
+    canvas {
+      border-radius: 12px;
+    }
+    
+  </style>
+</head>
+
+<body class="flex bg-gray-50 text-gray-800">
+
+  <!-- Sidebar -->
+ <aside class="sidebar bg-white shadow-md h-screen w-60 flex flex-col justify-between fixed right-0 mr-2 rounded-2xl p-4">
+    <div>
+      <h2 class="text-xl font-bold mb-4">منو</h2>
+      <nav class="flex flex-col gap-2">
+        <a href="admin-dashboard.html" class="menu-item py-3 px-5 flex items-center gap-3 rounded bg-orange-50 text-orange-600">
+          <i class="fa-solid fa-chart-line"></i> داشبورد
+        </a>
+        <a href="customers.html" class="menu-item py-3 px-5 flex items-center gap-3 rounded hover:bg-orange-100">
+          <i class="fa-solid fa-users"></i> مشتریان
+        </a>
+        <a href="products.html" class="menu-item py-3 px-5 flex items-center gap-3 rounded hover:bg-orange-100">
+          <i class="fa-solid fa-box"></i> محصولات
+        </a>
+        <a href="categories.html" class="menu-item active py-3 px-5 flex items-center gap-3 rounded hover:bg-orange-100">
+          <i class="fa-solid fa-layer-group"></i> دسته‌بندی‌ها
+        </a>
+        <a href="orders.html" class="menu-item active py-3 px-5 flex items-center gap-3 rounded hover:bg-orange-100">
+          <i class="fa-solid fa-cart-shopping"></i> سفارشات
+        </a>
+      </nav>
+    </div>
+    <div class="p-4 border-t">
+      <button class="w-full flex items-center justify-center bg-red-100 text-red-600 rounded-lg py-2 hover:bg-red-200 transition">
+        <i class="fa-solid fa-right-from-bracket ml-2"></i> خروج
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 mr-64 p-6 transition-all">
+    <!-- Top Navbar -->
+    <header class="flex flex-wrap items-center justify-between mb-6 bg-white p-4 rounded-xl shadow-sm sticky top-2 z-10">
+      <div class="flex items-center gap-3">
+        <button id="toggleSidebar" class="bg-orange-100 text-orange-600 p-2 rounded-lg hover:bg-orange-200">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="text-xl font-bold">مرور کلی فروش</h1>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <input id="searchInput" type="text" placeholder="جستجوی محصول..."
+               class="border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none" />
+        <div class="flex items-center gap-1 bg-gray-50 border border-gray-300 rounded-2xl px-3 py-2">
+          <i class="fa-regular fa-calendar text-gray-500"></i>
+          <input id="fromDate" type="text" class="datepicker w-20 text-center outline-none bg-transparent" placeholder="از">
+          <span class="text-gray-400 mx-1">–</span>
+          <input id="toDate" type="text" class="datepicker w-20 text-center outline-none bg-transparent" placeholder="تا">
+        </div>
+        <button class="border rounded-lg px-3 py-2 bg-white hover:bg-orange-100">
+          <i class="fa-regular fa-bell text-orange-600"></i>
+        </button>
+        <img src="./images/admin-avatar.jpg" class="w-10 h-10 rounded-full border" />
+      </div>
+    </header>
+
+    <!-- Cards -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white hover:bg-gradient-to-r hover:text-gray-800 p-4 rounded-2xl shadow hover:shadow-md transition text-center border-t-4 border-orange-400">
+        <p class="text-gray-400 text-sm ">کل فروش</p>
+        <h2 id="card-total-sales" class="text-2xl font-bold text-orange-500 mt-1 ">—</h2>
+        <span class="text-xs text-green-500 " id="card-total-change">—</span>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-md transition text-center border-t-4 border-blue-400">
+        <p class="text-gray-400 text-sm">مشتریان جدید</p>
+        <h2 id="card-new-customers" class="text-2xl font-bold mt-1">—</h2>
+        <span class="text-xs text-red-500" id="card-cust-change">—</span>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-md transition text-center border-t-4 border-yellow-400">
+        <p class="text-gray-400 text-sm">محصولات مرجوعی</p>
+        <h2 id="card-returns" class="text-2xl font-bold mt-1">—</h2>
+        <span class="text-xs text-red-500">—</span>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-md transition text-center border-t-4 border-green-400">
+        <p class="text-gray-400 text-sm">درآمد کل</p>
+        <h2 id="card-total-revenue" class="text-2xl font-bold mt-1">—</h2>
+        <span class="text-xs text-gray-500">—</span>
+      </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section id="dashboardQuickStats" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-gradient-to-br from-orange-50 to-white shadow-sm rounded-2xl p-4 text-center border border-orange-100">
+        <h3 class="text-sm text-gray-500">فروش این هفته</h3>
+        <p id="weekRevenue" class="text-2xl font-bold text-orange-600 mt-2">—</p>
+        <small id="weekCount" class="text-xs text-gray-400 block mt-1"></small>
+      </div>
+      <div class="bg-gradient-to-br from-orange-50 to-white shadow-sm rounded-2xl p-4 text-center border border-orange-100">
+        <h3 class="text-sm text-gray-500">فروش این ماه</h3>
+        <p id="monthRevenue" class="text-2xl font-bold text-orange-600 mt-2">—</p>
+        <small id="monthCount" class="text-xs text-gray-400 block mt-1"></small>
+      </div>
+      <div class="bg-gradient-to-br from-orange-50 to-white shadow-sm rounded-2xl p-4 text-center border border-orange-100">
+        <h3 class="text-sm text-gray-500">فروش سالانه</h3>
+        <p id="yearRevenue" class="text-2xl font-bold text-orange-600 mt-2">—</p>
+        <small id="yearCount" class="text-xs text-gray-400 block mt-1"></small>
+      </div>
+    </section>
+
+    <!-- Filter Summary -->
+    <section id="filteredSummary" class="max-w-5xl mx-auto mb-4 text-sm text-gray-600 text-right">
+      نتایج فیلتر: <strong>0</strong> سفارش — مجموع: <strong>0 تومان</strong>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="card bg-white p-4 rounded-2xl shadow hover:shadow-md transition">
+        <h3 class="font-semibold mb-4 text-orange-600">تحلیل درآمد</h3>
+        <canvas id="revenueChart"></canvas>
+      </div>
+      <div class="card bg-white p-4 rounded-2xl shadow hover:shadow-md transition">
+        <h3 class="font-semibold mb-4 text-orange-600">سود و زیان</h3>
+        <canvas id="profitChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <!-- JS اتصال به dashboard.js -->
+  <script type="module" src="./src/dashboard.js"></script>
+
+  <!-- Sidebar Toggle -->
+  <script>
+    const toggle = document.getElementById("toggleSidebar");
+    const sidebar = document.getElementById("sidebar");
+    const main = document.querySelector("main");
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+      main.classList.toggle("mr-64");
+      main.classList.toggle("mr-20");
+    });
+  </script>
+</body>
+</html>

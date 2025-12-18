@@ -16,7 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from Products.views import ProductViewSet, ReviewViewSet
+from Orders.views import CartItemViewSet
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+router = DefaultRouter()
+router.register(r'products', ProductViewSet, basename='products')
+router.register(r'cart', CartItemViewSet, basename='cart')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('api/products/<int:product_pk>/reviews/', ReviewViewSet.as_view({'get':'list','post':'create'})),
+    path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
+
+
+
