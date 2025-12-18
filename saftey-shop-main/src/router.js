@@ -9,10 +9,31 @@ const routes = {
 };
 
 export function router() {
-  const path = window.location.pathname;
+  // نرمالایز مسیر
+  let path = window.location.pathname.replace(/\/$/, '');
   const page = routes[path] || HomePage;
-  page();
+
+  try {
+    page();
+  } catch (err) {
+    console.error('⛔ خطا در اجرای صفحه:', err);
+    HomePage();
+  }
 }
 
+// اجرای اولیه
 window.addEventListener('DOMContentLoaded', router);
+
+// مدیریت برگشت/جلو مرورگر
 window.addEventListener('popstate', router);
+
+// هندل کردن کلیک روی لینک‌های داخلی برای SPA
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a[data-link]');
+  if (link) {
+    e.preventDefault();
+    const href = link.getAttribute('href');
+    window.history.pushState({}, '', href);
+    router();
+  }
+});

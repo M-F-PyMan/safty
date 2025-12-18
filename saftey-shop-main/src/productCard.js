@@ -12,12 +12,8 @@ function toPersianDigits(number) {
 }
 
 // تابع اصلی
-export function createProductCard(product, { onAddToCart, onSelectProduct } = {}) {
+export function createProductCard(product) {
   const card = document.createElement('div');
-  card.setAttribute('data-aos', 'fade-up');
-  card.setAttribute('data-aos-delay', '100');
-  card.setAttribute('data-aos-duration', '800');
-
   card.className = `
     relative bg-white h-auto w-full max-w-sm flex flex-col justify-between
     rounded-md md:rounded-2xl border border-gray-200 shadow-md
@@ -27,6 +23,7 @@ export function createProductCard(product, { onAddToCart, onSelectProduct } = {}
 
   const originalPrice = parsePersianNumber(product.price);
   const discountPrice = product.discountPrice ? parsePersianNumber(product.discountPrice) : null;
+  const imageSrc = product.image || product.mainImage || '/images/placeholder.png';
 
   const priceSection = discountPrice
     ? `
@@ -46,7 +43,7 @@ export function createProductCard(product, { onAddToCart, onSelectProduct } = {}
     `;
 
   card.innerHTML = `
-    <img src="${product.image}" alt="${product.title}" class="product-link w-[70%] md:w-full h-48 object-contain rounded">
+    <img src="${imageSrc}" alt="${product.title}" class="product-link w-[70%] md:w-full h-48 object-contain rounded">
     <h3 class="product-link mt-4 text-sm md:text-lg font-semibold text-gray-800 truncate">${product.title}</h3>
     ${priceSection}
     <button
@@ -68,20 +65,18 @@ export function createProductCard(product, { onAddToCart, onSelectProduct } = {}
 
   // کلیک روی دکمه افزودن به سبد خرید
   const btn = card.querySelector('button');
-btn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  
-  // اضافه کردن به localStorage
-  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  const existing = cart.find(item => item.id === product.id);
-  if (existing) existing.qty += 1;
-  else cart.push({ ...product, qty: 1 });
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existing = cart.find(item => item.id === product.id);
+    if (existing) existing.qty += 1;
+    else cart.push({ ...product, qty: 1 });
 
-  localStorage.setItem('cart', JSON.stringify(cart));
-  
-  updateCartCount(); // بروزرسانی counter
-  showToast('محصول با موفقیت به سبد خرید اضافه شد ✅'); // نمایش پیغام
-});
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    showToast('محصول با موفقیت به سبد خرید اضافه شد ✅');
+  });
 
   return card;
 }
+

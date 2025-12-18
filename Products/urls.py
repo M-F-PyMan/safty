@@ -5,6 +5,7 @@ from .views import (
     ReviewViewSet,
     BrandViewSet,
     CategoryViewSet,
+    remove_from_cart,
 )
 
 router = DefaultRouter()
@@ -14,7 +15,8 @@ router.register(r'categories', CategoryViewSet, basename='categories')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('products/<int:product_pk>/reviews/',
-         ReviewViewSet.as_view({'get':'list','post':'create'}),
+    path('products/<int:product_pk>/reviews/',ReviewViewSet.as_view({'get':'list','post':'create'}),
          name='product-reviews'),
+
+    path('api/cart/<int:product_id>/remove/', remove_from_cart),
 ]

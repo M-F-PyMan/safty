@@ -13,7 +13,7 @@ import { Footer } from './components/Footer.js';
 
 AOS.init({ duration: 700, offset: 120, once: true });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // هدر و فوتر
   const headerEl = HeaderWithNav();
   document.body.prepend(headerEl);
@@ -26,16 +26,24 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDesktopMenu();
   renderMobileMenu();
 
-  document.getElementById('mobileMenuBtn')?.addEventListener('click', () => toggleMobileMenu(true));
-  document.getElementById('closeMobileMenu')?.addEventListener('click', () => toggleMobileMenu(false));
-  document.getElementById('mobileMenuOverlay')?.addEventListener('click', () => toggleMobileMenu(false));
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const closeMobileMenu = document.getElementById('closeMobileMenu');
+  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+  mobileMenuBtn?.addEventListener('click', () => toggleMobileMenu(true));
+  closeMobileMenu?.addEventListener('click', () => toggleMobileMenu(false));
+  mobileMenuOverlay?.addEventListener('click', () => toggleMobileMenu(false));
 
   // بارگذاری محتوا
-  loadLatestProducts();
-  loadBestSellingProducts();
-  loadReviews();
-  initBrands();
-  renderFeatures();
+  try {
+    await loadLatestProducts();
+    await loadBestSellingProducts();
+    await loadReviews();
+    await initBrands();
+    renderFeatures();
+  } catch (err) {
+    console.error("❌ خطا در بارگذاری محتوا:", err);
+  }
 
   // شمارنده سبد خرید
   updateCartCount();

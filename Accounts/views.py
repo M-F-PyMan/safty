@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from django.contrib.auth.hashers import make_password
 from .models import PasswordResetToken
 from .serializers import RegisterSerializer, UserSerializer,ForgotPasswordSerializer
 from django.contrib.auth.models import User
@@ -12,7 +12,7 @@ from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from rest_framework import status
 
-from rest_framework.views import APIView
+
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
@@ -92,3 +92,30 @@ class ForgotPasswordView(APIView):
 
         return Response({"detail": "لینک بازیابی رمز عبور به ایمیل شما ارسال شد."},
                         status=status.HTTP_200_OK)
+
+
+
+class ResetPasswordView(APIView):
+    def post(self, request):
+        serializer = ResetPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        token = serializer.validated_data['token']
+        new_password = serializer.validated_data['new_password']
+
+        try:
+            reset_token = PasswordResetToken.objects.get(token=token)
+        except PasswordResetToken.DoesNotExist:
+            return Response({"detail": "توکن معتبر نیست یا منقضی شده."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user = reset_token.user
+        user.password = make_password(new_password)
+        user.save()
+
+        # بعد از استفاده، توکن حذف می‌شود
+        reset_token.delete()
+
+        return Response({"detail": "رمز عبور با موفقیت تغییر یافت."},
+                        status=status.HTTP_200_OK)
+

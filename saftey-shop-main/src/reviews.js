@@ -16,7 +16,8 @@ export async function loadReviews() {
       slide.className = 'swiper-slide p-4';
       slide.innerHTML = `
         <div class="bg-white rounded-xl p-6 shadow hover:shadow-md text-center border border-gray-200">
-          <img src="${review.image}" alt="${review.name}" class="w-16 h-16 rounded-full mx-auto mb-4 object-cover border-2 border-orange-400"/>
+          <img src="${review.image}" alt="${review.name}" loading="lazy"
+            class="w-16 h-16 rounded-full mx-auto mb-4 object-cover border-2 border-orange-400"/>
           <p class="text-gray-600 text-sm mb-3 leading-relaxed">"${review.text}"</p>
           <h4 class="text-md font-semibold text-gray-800">${review.name}</h4>
         </div>
@@ -30,12 +31,20 @@ export async function loadReviews() {
       spaceBetween: 20,
       grabCursor: true,
       pagination: { el: '.swiper-pagination', clickable: true },
-      navigation: { nextEl: '.reviews-swiper-nex', prevEl: '.reviews-swiper-pre' },
+      navigation: { nextEl: '.reviews-swiper-next', prevEl: '.reviews-swiper-prev' },
       autoplay: { delay: 2000, disableOnInteraction: false },
-      breakpoints: { 640: { slidesPerView: 1.5 }, 768: { slidesPerView: 2 }, 1024: { slidesPerView: 2.5 } },
+      breakpoints: {
+        640: { slidesPerView: 1.5 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 2.5 }
+      },
     });
 
   } catch (err) {
     console.error('❌ خطا در بارگذاری نظرات:', err);
+    const reviewsWrapper = document.getElementById('reviews-wrapper');
+    if (reviewsWrapper) {
+      reviewsWrapper.innerHTML = '<p class="text-red-600">❌ خطا در بارگذاری نظرات</p>';
+    }
   }
 }

@@ -1,23 +1,28 @@
-import { fetchProducts } from './api.js';
 import { toToman, debounce } from './utils.js';
 
 let PRODUCTS = [];
 let filtered = [];
 let currentPage = 1;
 const perPage = 10;
-let editingProductId = null; // فقط یک بار تعریف
+let editingProductId = null;
 
-// 🟢 بارگذاری محصولات
+// 🟢 بارگذاری محصولات از API
 async function loadProducts() {
-  PRODUCTS = await fetchProducts();
-  filtered = [...PRODUCTS];
-  fillFilterOptions();
-  renderTable(filtered);
+  try {
+    const res = await fetch('/api/products/');
+    PRODUCTS = await res.json();
+    filtered = [...PRODUCTS];
+    fillFilterOptions();
+    renderTable(filtered);
+  } catch (e) {
+    console.error('خطا در بارگذاری محصولات', e);
+  }
 }
 
-// 🟢 پر کردن جدول با داده‌ها
+// 🟢 پر کردن جدول
 function renderTable(data) {
   const tbody = document.getElementById('productTableBody');
+  if (!tbody) return;
   tbody.innerHTML = '';
 
   const start = (currentPage - 1) * perPage;
@@ -32,15 +37,14 @@ function renderTable(data) {
       <td class="border p-2">${p.category}</td>
       <td class="border p-2">${toToman(p.price)}</td>
       <td class="border p-2">${p.stock}</td>
-    <td class="border p-2 flex gap-2 justify-center">
-  <button class="edit-btn px-2 py-1 text-green-700" data-id="${p.id}">
-    <i class="fa-solid fa-pencil"></i>
-  </button>
-  <button class="delete-btn px-2 py-1 text-red-500" data-id="${p.id}">
-    <i class="fa-solid fa-trash"></i>
-  </button>
-</td>
-
+      <td class="border p-2 flex gap-2 justify-center">
+        <button class="edit-btn px-2 py-1 text-green-700" data-id="${p.id}">
+          <i class="fa-solid fa-pencil"></i>
+        </button>
+        <button class="delete-btn px-2 py-1 text-red-500" data-id="${p.id}">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
     `;
     tbody.appendChild(tr);
   });
@@ -57,6 +61,8 @@ function fillFilterOptions() {
   const catSel = document.getElementById('filterCategory');
   const brandSel = document.getElementById('filterBrand');
 
+  if (!catSel || !brandSel) return;
+
   catSel.innerHTML = '<option value="">دسته‌بندی</option>';
   brandSel.innerHTML = '<option value="">برند</option>';
 
@@ -64,7 +70,7 @@ function fillFilterOptions() {
   brands.forEach(b => brandSel.insertAdjacentHTML('beforeend', `<option>${b}</option>`));
 }
 
-// 🟢 فیلتر محصولات
+// 🟢 اعمال فیلتر
 function applyFilters() {
   const cat = document.getElementById('filterCategory').value;
   const brand = document.getElementById('filterBrand').value;
@@ -103,14 +109,14 @@ function applySort() {
   if (sortDiscount.includes('کم')) sorted.sort((a, b) => (a.discountPercentage || 0) - (b.discountPercentage || 0));
   else if (sortDiscount.includes('بیش')) sorted.sort((a, b) => (b.discountPercentage || 0) - (a.discountPercentage || 0));
 
-  if (sortDate.includes('جدید')) sorted.reverse();
+  if (sortDate.includes('جدید')) sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   currentPage = 1;
   renderTable(sorted);
 }
 
-// 🟢 افزودن محصول جدید (modal افزودن)
-function saveProduct() {
+// 🟢 افزودن محصول جدید
+async function saveProduct() {
   const title = document.getElementById('productTitle').value.trim();
   const category = document.getElementById('productCategory').value.trim();
   const brand = document.getElementById('productBrand').value.trim();
@@ -124,28 +130,39 @@ function saveProduct() {
     return;
   }
 
-  const newP = {
-    id: PRODUCTS.length ? Math.max(...PRODUCTS.map(p => p.id)) + 1 : 1,
-    title,
-    category,
-    brand,
-    price,
-    discountPercentage: discount,
-    stock,
-    description,
-  };
-  PRODUCTS.push(newP);
-  filtered.push(newP);
-  renderTable(filtered);
-  alert('✅ محصول جدید اضافه شد.');
+  const newP = { title, category, brand, price, discountPercentage: discount, stock, description };
+
+  try {
+    const res = await fetch('/api/products/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newP)
+    });
+    if (res.ok) {
+      await loadProducts();
+      alert('✅ محصول جدید اضافه شد.');
+    } else {
+      alert('❌ خطا در افزودن محصول');
+    }
+  } catch (e) {
+    console.error('خطا در افزودن محصول', e);
+  }
 }
 
 // 🟢 حذف محصول
-function deleteProduct(id) {
+async function deleteProduct(id) {
   if (!confirm('آیا از حذف محصول مطمئن هستید؟')) return;
-  PRODUCTS = PRODUCTS.filter(p => p.id !== id);
-  filtered = filtered.filter(p => p.id !== id);
-  renderTable(filtered);
+  try {
+    const res = await fetch(`/api/products/${id}/`, { method: 'DELETE' });
+    if (res.ok) {
+      await loadProducts();
+      alert('✅ محصول حذف شد.');
+    } else {
+      alert('❌ خطا در حذف محصول');
+    }
+  } catch (e) {
+    console.error('خطا در حذف محصول', e);
+  }
 }
 
 // 🟢 modal ویرایش
@@ -162,97 +179,35 @@ function openEditModal(product) {
   document.getElementById('editProductModal').classList.remove('hidden');
 }
 
-// 🟢 ذخیره تغییرات modal ویرایش
-document.getElementById('saveEditProduct').addEventListener('click', () => {
-  const product = PRODUCTS.find(p => p.id === editingProductId);
-  if (!product) return;
+// 🟢 ذخیره تغییرات ویرایش
+async function saveEditProduct() {
+  const product = {
+    title: document.getElementById('editProductTitle').value.trim(),
+    category: document.getElementById('editProductCategory').value.trim(),
+    brand: document.getElementById('editProductBrand').value.trim(),
+    price: parseInt(document.getElementById('editProductPrice').value),
+    discountPercentage: parseFloat(document.getElementById('editProductDiscount').value) || 0,
+    stock: parseInt(document.getElementById('editProductStock').value),
+    description: document.getElementById('editProductDescription').value.trim()
+  };
 
-  product.title = document.getElementById('editProductTitle').value.trim();
-  product.category = document.getElementById('editProductCategory').value.trim();
-  product.brand = document.getElementById('editProductBrand').value.trim();
-  product.price = parseInt(document.getElementById('editProductPrice').value);
-  product.discountPercentage = parseFloat(document.getElementById('editProductDiscount').value) || 0;
-  product.stock = parseInt(document.getElementById('editProductStock').value);
-  product.description = document.getElementById('editProductDescription').value.trim();
-
-  document.getElementById('editProductModal').classList.add('hidden');
-  editingProductId = null;
-  renderTable(filtered);
-  alert('✅ تغییرات ذخیره شد');
-});
-
-// 🟢 بستن modal ویرایش
-document.getElementById('closeEditModal').addEventListener('click', () => {
-  document.getElementById('editProductModal').classList.add('hidden');
-  editingProductId = null;
-});
-
-// 🟢 ایونت‌های دکمه‌ها در جدول
-function initRowEvents() {
-  document.querySelectorAll('.edit-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = parseInt(btn.dataset.id);
-      const product = PRODUCTS.find(p => p.id === id);
-      if (product) openEditModal(product);
+  try {
+    const res = await fetch(`/api/products/${editingProductId}/`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(product)
     });
-  });
-  document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', () => deleteProduct(parseInt(btn.dataset.id)));
-  });
-}
-
-// 🟢 Pagination
-function renderPagination(data) {
-  const totalPages = Math.ceil(data.length / perPage);
-  let pagination = document.getElementById('pagination');
-
-  if (!pagination) {
-    pagination = document.createElement('div');
-    pagination.id = 'pagination';
-    pagination.className = 'flex justify-center mt-4 gap-2';
-    const tableSection = document.querySelector('section.bg-white:last-of-type');
-    tableSection.appendChild(pagination);
-  }
-
-  pagination.innerHTML = '';
-
-  for (let i = 1; i <= totalPages; i++) {
-    const btn = document.createElement('button');
-    btn.textContent = i;
-    btn.className = `px-3 py-1 rounded border ${
-      i === currentPage
-        ? 'bg-orange-500 text-white border-orange-500'
-        : 'bg-white text-gray-700 border-gray-300 hover:bg-orange-100'
-    }`;
-    btn.addEventListener('click', () => {
-      currentPage = i;
-      renderTable(filtered);
-      scrollToTableTop();
-    });
-    pagination.appendChild(btn);
+    if (res.ok) {
+      document.getElementById('editProductModal').classList.add('hidden');
+      editingProductId = null;
+      await loadProducts();
+      alert('✅ تغییرات ذخیره شد');
+    } else {
+      alert('❌ خطا در ذخیره تغییرات');
+    }
+  } catch (e) {
+    console.error('خطا در ذخیره تغییرات', e);
   }
 }
-
-// 🟢 Scroll top
-function scrollToTableTop() {
-  const table = document.getElementById('productTableBody');
-  if (table) table.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// 🟢 ایونت‌ها
-function initEvents() {
-  ['filterCategory', 'filterBrand', 'filterDiscount'].forEach(id =>
-    document.getElementById(id).addEventListener('change', applyFilters)
-  );
-  ['sortPrice', 'sortDate', 'sortDiscount'].forEach(id =>
-    document.getElementById(id).addEventListener('change', applySort)
-  );
-  document.getElementById('searchProductInput').addEventListener('input', debounce(applyFilters, 300));
-  document.getElementById('addProductBtn').addEventListener('click', saveProduct);
-}
-
-// 🟢 Initialization
-(async function init() {
-  await loadProducts();
-  initEvents();
-})();
+document.getElementById('saveEditProduct').addEventListener('click', saveEditProduct);
+document.getElementById('closeEditModal').add
